@@ -163,6 +163,8 @@
                 </div>
 
                 EVN : Eigen Vektor Normalisasi
+                @if ($kt == 0)
+                
                 <div class="form-group">
                     <table class="table table-bordered">
                         <tbody>
@@ -174,22 +176,21 @@
                             @foreach ($guru as $key => $item)
                                 <tr>
                                     <td>{{$item->nama}}</td>
-                                    <td>{{array_sum($array_sumk1[$key])}}</td>
-                                    <td></td>
-                                    {{-- <td>{{$sumevn[$key]}}</td>
-                                    <td>{{$sumevn[$key] / array_sum($sumevn)}}</td> --}}
+                                    <td>
+                                        {{array_sum($k1_chunk[$key])}}
+                                    </td>
+                                    <td>{{array_sum($k1_chunk[$key]) / array_sum($sumevenk1)}}</td> 
                                 </tr>
                             @endforeach
                             <tr>
                                 <td></td>
-                                <td></td>
-                                {{-- <td>{{array_sum($sumevn)}}</td> --}}
+                                <td>{{array_sum($sumevenk2)}}</td>
                                 <td></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-{{-- 
+
                 Rasio Konsistensi
                 <div class="form-group">
                     <table class="table table-bordered">
@@ -200,175 +201,143 @@
                             <td>CR</td>
                             </tr>
                             <tr>
-                                <td>{{$emaks}}</td>
-                                <td>{{$ci}}</td>
-                                <td>{{$cr}}</td>
+                                <td>{{$emaksK1}}</td>
+                                <td>{{$ciK1}}</td>
+                                <td>{{$crK1}}</td>
                             </tr>
                             <tr>
                                 <td colspan=3>
-                                    Catatan, jika Nilai CR < 0,1 maka konsisten, jika lebih dari 0,1 maka ada kesalahan dan harus di hitung ulang
+                                    jika Nilai CR < 0,1 maka konsisten
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                </div> --}}
+                </div>
+                @elseif($kt ==1)
+        
+                <div class="form-group">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr class="bg-danger">
+                            <td class="bg-danger">Kriteria</td>
+                            <td>Total</td>
+                            <td>EVN</td>
+                            </tr>
+                            @foreach ($guru as $key => $item)
+                                <tr>
+                                    <td>{{$item->nama}}</td>
+                                    <td>
+                                        {{array_sum($k2_chunk[$key])}}
+                                    </td>
+                                    <td>{{array_sum($k2_chunk[$key]) / array_sum($sumevenk2)}}</td> 
+                                </tr>
+                            @endforeach
+                            <tr>
+                                <td></td>
+                                <td>{{array_sum($sumevenk1)}}</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                Rasio Konsistensi
+                <div class="form-group">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr class="bg-danger">
+                            <td>E-maks</td>
+                            <td>CI</td>
+                            <td>CR</td>
+                            </tr>
+                            <tr>
+                                <td>{{$emaksK2}}</td>
+                                <td>{{$ciK2}}</td>
+                                <td>{{$crK2}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan=3>
+                                    jika Nilai CR < 0,1 maka konsisten
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                @else
+
+                <div class="form-group">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr class="bg-danger">
+                            <td class="bg-danger">Kriteria</td>
+                            <td>Total</td>
+                            <td>EVN</td>
+                            </tr>
+                            @foreach ($guru as $key => $item)
+                                <tr>
+                                    <td>{{$item->nama}}</td>
+                                    <td>
+                                        {{array_sum($k3_chunk[$key])}}
+                                    </td>
+                                    <td>{{array_sum($k3_chunk[$key]) / array_sum($sumevenk3)}}</td> 
+                                </tr>
+                            @endforeach
+                            <tr>
+                                <td></td>
+                                <td>{{array_sum($sumevenk3)}}</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                Rasio Konsistensi
+                <div class="form-group">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr class="bg-danger">
+                            <td>E-maks</td>
+                            <td>CI</td>
+                            <td>CR</td>
+                            </tr>
+                            <tr>
+                                <td>{{$emaksK3}}</td>
+                                <td>{{$ciK3}}</td>
+                                <td>{{$crK3}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan=3>
+                                    jika Nilai CR < 0,1 maka konsisten
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                @endif
+
                     
             </div>
             @endforeach
 
-                {{-- <div class="box-body">
+                <div class="box-body">
                     <div class="form-group">
                         <div class="col-sm-12">
-                            Pencarian Eigen Vektor Normalisasi Setiap Kriteria<br/>
+                            <h2>HASIL AKHIR</h2>
                         </div>
                     </div>
                     <div class="form-group">
                         <table class="table table-bordered">
                             <tbody>
+                                @foreach ($hasil as $item)    
                                 <tr>
-                                    <td class="bg-danger">EVN Terhadap Kehadiran</td>
-                                @foreach ($kategori as $item)
-                                    <td class="bg-danger">{{$item->nama}}</td>
-                                @endforeach
-                                <td>Total</td>
-                                </tr>
-                                @foreach ($kategori as $key => $baris)
-                                    <tr>
-                                        <td class="bg-danger">{{$baris->nama}}</td>
-                                    
-                                        @foreach ($data_matrik[0] as $key2 => $kolom)
-                                        <td>
-                                           {{$kolom * $pengali[$key][$key2]}}
-                                        </td>
-                                        @endforeach
-                                        <td>{{$sumc1[$key]}}</td>
-                                    </tr>
-                                @endforeach
+                                    <td>{{$item->nama}}</td>
+                                    <td>{{$item->hasil}}</td>
                                 <tr>
-                                    <td>Baris 1</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>{{$sumevnc1}}</td>
-                                </tr>
+                                @endforeach
                           </tbody>
                         </table>
                     </div>
-
-                    <div class="form-group">
-                        <table class="table table-bordered">
-                            <tbody>
-                                <tr>
-                                    <td class="bg-danger">EVN Terhadap Kreatifitas</td>
-                                @foreach ($kategori as $item)
-                                    <td class="bg-danger">{{$item->nama}}</td>
-                                @endforeach
-                                <td>Total</td>
-                                </tr>
-                                @foreach ($kategori as $key => $baris)
-                                    <tr>
-                                        <td class="bg-danger">{{$baris->nama}}</td>
-                                    
-                                        @foreach ($data_matrik[1] as $key2 => $kolom)
-                                        <td>
-                                           {{$kolom * $pengali[$key][$key2]}}
-                                        </td>
-                                        @endforeach
-                                        <td>{{$sumc2[$key]}}</td>
-                                    </tr>
-                                @endforeach
-                                <tr>
-                                    <td>Baris 2</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>{{$sumevnc2}}</td>
-                                </tr>
-                          </tbody>
-                        </table>
-                    </div>
-
-                    <div class="form-group">
-                        <table class="table table-bordered">
-                            <tbody>
-                                <tr>
-                                    <td class="bg-danger">EVN Terhadap Sosial</td>
-                                @foreach ($kategori as $item)
-                                    <td class="bg-danger">{{$item->nama}}</td>
-                                @endforeach
-                                <td>Total</td>
-                                </tr>
-                                @foreach ($kategori as $key => $baris)
-                                    <tr>
-                                        <td class="bg-danger">{{$baris->nama}}</td>
-                                    
-                                        @foreach ($data_matrik[2] as $key2 => $kolom)
-                                        <td>
-                                           {{$kolom * $pengali[$key][$key2]}}
-                                        </td>
-                                        @endforeach
-                                        <td>{{$sumc3[$key]}}</td>
-                                    </tr>
-                                @endforeach
-                                <tr>
-                                    <td>Baris 3</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>{{$sumevnc3}}</td>
-                                </tr>
-                          </tbody>
-                        </table>
-                    </div>
-
-                    EVN : Eigen Vektor Normalisasi
-                    <div class="form-group">
-                        <table class="table table-bordered">
-                            <tbody>
-                                <tr class="bg-danger">
-                                <td class="bg-danger">Kriteria</td>
-                                <td>Total</td>
-                                <td>EVN</td>
-                                </tr>
-                                @foreach ($kategori as $key => $item)
-                                    <tr>
-                                        <td>{{$item->nama}}</td>
-                                        <td>{{$sumevn[$key]}}</td>
-                                        <td>{{$sumevn[$key] / array_sum($sumevn)}}</td>
-                                    </tr>
-                                @endforeach
-                                <tr>
-                                    <td></td>
-                                    <td>{{array_sum($sumevn)}}</td>
-                                    <td></td>
-                                </tr>
-                          </tbody>
-                        </table>
-                    </div>
-
-                    Rasio Konsistensi
-                    <div class="form-group">
-                        <table class="table table-bordered">
-                            <tbody>
-                                <tr class="bg-danger">
-                                <td>E-maks</td>
-                                <td>CI</td>
-                                <td>CR</td>
-                                </tr>
-                                <tr>
-                                    <td>{{$emaks}}</td>
-                                    <td>{{$ci}}</td>
-                                    <td>{{$cr}}</td>
-                                </tr>
-                                <tr>
-                                    <td colspan=3>
-                                        Catatan, jika Nilai CR < 0,1 maka konsisten, jika lebih dari 0,1 maka ada kesalahan dan harus di hitung ulang
-                                    </td>
-                                </tr>
-                          </tbody>
-                        </table>
-                    </div>
-                </div> --}}
+                </div>
                 <!-- /.box-body -->
                 
                

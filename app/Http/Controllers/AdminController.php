@@ -579,25 +579,70 @@ class AdminController extends Controller
         $array_sumk1 = array_chunk($array_sumk1, 3);
         $array_sumk2 = array_chunk($array_sumk2, 3);
         $array_sumk3 = array_chunk($array_sumk3, 3);
-        //$array_sumevn = array_merge($sumevnc1K1, $sumevnc2K1, $sumevnc3K1, $sumevnc1K2, $sumevnc2K2, $sumevnc3K2, $sumevnc1K3, $sumevnc2K3, $sumevnc3K3);
-        //$array_sumevn = array_chunk($array_sumevn, 3);
+
+        $sumevenk1 = array_merge($sumc1k1, $sumc2k1, $sumc3k1);
+        $sumevenk2 = array_merge($sumc1k2, $sumc2k2, $sumc3k2);
+        $sumevenk3 = array_merge($sumc1k3, $sumc2k3, $sumc3k3);
+        $k1_chunk = array_chunk($sumevenk1, 3);
+        $k2_chunk = array_chunk($sumevenk2, 3);
+        $k3_chunk = array_chunk($sumevenk3, 3);
+
         $totalEVNK1 = array_sum($sumc1k1) + array_sum($sumc2k1) + array_sum($sumc3k1);
         $totalEVNK2 = array_sum($sumc1k2) + array_sum($sumc2k2) + array_sum($sumc3k2);
         $totalEVNK3 = array_sum($sumc1k3) + array_sum($sumc2k3) + array_sum($sumc3k3);
-        dd($array_sumk1);
-        // $evnc1 = $sumevnc1 / $TOTALEVN;
-        // $evnc2 = $sumevnc2 / $TOTALEVN;
-        // $evnc3 = $sumevnc3 / $TOTALEVN;
-        //        dd($totalEVNK1, $totalEVNK2, $totalEVNK3);
-        // //hitung Emaks
-        // $sumpengali1 = array_sum($pengali_baris1);
-        // $sumpengali2 = array_sum($pengali_baris2);
-        // $sumpengali3 = array_sum($pengali_baris3);
-        // $emaks = ($sumpengali1 * $evnc1) + ($sumpengali2 * $evnc2) + ($sumpengali3 * $evnc3);
-        // $ci = ($emaks - 3) / 2;
-        // $cr = $ci / 0.58;
 
+        $evnc1K1 = $sumevnc1K1 / $totalEVNK1;
+        $evnc2K1 = $sumevnc2K1 / $totalEVNK1;
+        $evnc3K1 = $sumevnc3K1 / $totalEVNK1;
+
+        $evnc1K2 = $sumevnc1K2 / $totalEVNK2;
+        $evnc2K2 = $sumevnc2K2 / $totalEVNK2;
+        $evnc3K2 = $sumevnc3K2 / $totalEVNK2;
+
+        $evnc1K3 = $sumevnc1K3 / $totalEVNK3;
+        $evnc2K3 = $sumevnc2K3 / $totalEVNK3;
+        $evnc3K3 = $sumevnc3K3 / $totalEVNK3;
+
+        //hitung Emaks
+        $sumpengali1K1 = array_sum($pengali_baris1_kategori1);
+        $sumpengali2K1 = array_sum($pengali_baris2_kategori1);
+        $sumpengali3K1 = array_sum($pengali_baris3_kategori1);
+
+        $sumpengali1K2 = array_sum($pengali_baris1_kategori2);
+        $sumpengali2K2 = array_sum($pengali_baris2_kategori2);
+        $sumpengali3K2 = array_sum($pengali_baris3_kategori2);
+
+        $sumpengali1K3 = array_sum($pengali_baris1_kategori3);
+        $sumpengali2K3 = array_sum($pengali_baris2_kategori3);
+        $sumpengali3K3 = array_sum($pengali_baris3_kategori3);
+
+        $emaksK1 = ($sumpengali1K1 * $evnc1K1) + ($sumpengali2K1 * $evnc2K1) + ($sumpengali3K1 * $evnc3K1);
+        $ciK1 = ($emaksK1 - 3) / 2;
+        $crK1 = $ciK1 / 0.58;
+
+        $emaksK2 = ($sumpengali1K2 * $evnc1K2) + ($sumpengali2K2 * $evnc2K2) + ($sumpengali3K2 * $evnc3K2);
+        $ciK2 = ($emaksK2 - 3) / 2;
+        $crK2 = $ciK2 / 0.58;
+
+        $emaksK3 = ($sumpengali1K3 * $evnc1K3) + ($sumpengali2K3 * $evnc2K3) + ($sumpengali3K3 * $evnc3K3);
+        $ciK3 = ($emaksK3 - 3) / 2;
+        $crK3 = $ciK3 / 0.58;
         // $sumevn = [$sumevnc1, $sumevnc2, $sumevnc3];
+
+        $evn_kriteria = AHPKategori($id);
+
+        $hasil = $guru->map(function ($item, $value) use ($evnc1K1, $evnc2K1, $evnc3K1, $evnc1K2, $evnc2K2, $evnc3K2, $evnc1K3, $evnc2K3, $evnc3K3, $evn_kriteria) {
+            if ($value == 0) {
+                $item->hasil = ($evnc1K1 * $evn_kriteria[0]) + ($evnc1K2 * $evn_kriteria[1]) + ($evnc1K3 * $evn_kriteria[2]);
+            }
+            if ($value == 1) {
+                $item->hasil = ($evnc2K1 * $evn_kriteria[0]) + ($evnc2K2 * $evn_kriteria[1]) + ($evnc2K3 * $evn_kriteria[2]);
+            }
+            if ($value == 2) {
+                $item->hasil = ($evnc3K1 * $evn_kriteria[0]) + ($evnc3K2 * $evn_kriteria[1]) + ($evnc3K3 * $evn_kriteria[2]);
+            }
+            return $item;
+        });
 
         return view('admin.ahp.detail2', compact(
             'kategori',
@@ -610,7 +655,24 @@ class AdminController extends Controller
             'pengali',
             'array_sumk1',
             'array_sumk2',
-            'array_sumk3'
+            'array_sumk3',
+            'k1_chunk',
+            'k2_chunk',
+            'k3_chunk',
+            'sumevenk1',
+            'sumevenk2',
+            'sumevenk3',
+            'emaksK1',
+            'emaksK2',
+            'emaksK3',
+            'ciK1',
+            'ciK2',
+            'ciK3',
+            'crK1',
+            'crK2',
+            'crK3',
+            'hasil'
+
         ));
     }
 
