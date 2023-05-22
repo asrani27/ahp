@@ -27,9 +27,10 @@
                 <td>{{$data->firstItem() + $key}}</td>
                 <td>{{$item->tahun}}</td>
                 <td>
-                  <a href="/superadmin/ahp/detail/{{$item->file}}" target="_blank" class="btn btn-flat btn-sm btn-danger"><i class="fa fa-list"></i> Detail</a>
-                  <a href="/superadmin/ahp/penilaian/{{$item->id}}" class="btn btn-flat btn-sm btn-danger"><i class="fa fa-edit"></i> Penilaian Guru</a>
-                  <a href="/superadmin/ahp/edit/{{$item->id}}" class="btn btn-flat btn-sm btn-danger"><i class="fa fa-edit"></i> Edit</a>
+                  <a href="/superadmin/ahp/detail/{{$item->id}}" target="_blank" class="btn btn-flat btn-sm btn-danger"><i class="fa fa-list"></i> Hasil Kriteria</a>
+                  <a href="/superadmin/ahp/hasilguru/{{$item->id}}" target="_blank" class="btn btn-flat btn-sm btn-danger"><i class="fa fa-list"></i> Hasil Guru</a>
+                  <a href="/superadmin/ahp/penilaian/{{$item->id}}" class="btn btn-flat btn-sm btn-danger"><i class="fa fa-edit"></i> Nilai Guru</a>
+                  <a href="/superadmin/ahp/edit/{{$item->id}}" class="btn btn-flat btn-sm btn-danger"><i class="fa fa-edit"></i> Nilai Kriteria</a>
                   <a href="/superadmin/ahp/delete/{{$item->id}}" class="btn btn-flat btn-sm btn-danger" onclick="return confirm('Yakin ingin dihapus?');"><i class="fa fa-trash"></i> Delete</a>
                 </td>
               </tr>

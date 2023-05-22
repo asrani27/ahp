@@ -93,6 +93,11 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
     Route::get('superadmin/ahp/edit/{id}', [AdminController::class, 'ahp_edit']);
     Route::post('superadmin/ahp/edit/{id}', [AdminController::class, 'ahp_update']);
     Route::get('superadmin/ahp/delete/{id}', [AdminController::class, 'ahp_delete']);
+    Route::get('superadmin/ahp/detail/{id}', [AdminController::class, 'ahp_detail']);
+    Route::get('superadmin/ahp/hasilguru/{id}', [AdminController::class, 'ahp_detail2']);
+    Route::get('superadmin/ahp/excel/{id}', [AdminController::class, 'ahp_excel']);
+    Route::get('superadmin/ahp/penilaian/{id}', [AdminController::class, 'ahp_guru']);
+    Route::post('superadmin/ahp/penilaian/{id}', [AdminController::class, 'ahp_guru_store']);
 
     Route::get('superadmin/laporan', [AdminController::class, 'laporan']);
     Route::get('laporan/penyedia', [AdminController::class, 'lap_penyedia']);
