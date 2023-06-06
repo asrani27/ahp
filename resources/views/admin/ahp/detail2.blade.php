@@ -328,10 +328,16 @@
                     <div class="form-group">
                         <table class="table table-bordered">
                             <tbody>
-                                @foreach ($hasil as $item)    
+                                <tr>
+                                    <td>Nama Guru</td>
+                                    <td>Nilai</td>
+                                    <td>Rangking</td>
+                                </tr>
+                                @foreach ($hasil as $key => $item)    
                                 <tr>
                                     <td>{{$item->nama}}</td>
                                     <td>{{$item->hasil}}</td>
+                                    <td>{{$key + 1}}</td>
                                 <tr>
                                 @endforeach
                           </tbody>
